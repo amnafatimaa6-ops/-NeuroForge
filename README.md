@@ -308,6 +308,10 @@ NeuroForge was trained on **32,155 observations** and evaluated on a separate **
 | Precision         |   **0.98** |
 | Recall            |   **0.90** |
 
+### Experiment Output
+
+![NeuroForge NASA Experiment Results](Screenshot.png)
+
 ### Confusion Matrix
 
 ```text
@@ -316,6 +320,8 @@ NeuroForge was trained on **32,155 observations** and evaluated on a separate **
 
 Actual 0         705     126
 Actual 1         722    6486
+```
+
 ```
 
 The model achieved high precision while maintaining strong recall for the transit class.
