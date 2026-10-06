@@ -149,11 +149,11 @@ The model contains only a small number of parameters, keeping the implementation
 
 # 📐 Mathematics
 
-One of the main goals of NeuroForge is to make the underlying mathematics visible rather than hiding it behind a high-level machine-learning API.
+One of the main goals of **NeuroForge** is to expose the mathematics behind the neural network rather than hiding the implementation behind a high-level machine-learning API.
 
-Forward Propagation
+## Forward Propagation
 
-For the hidden layer:
+For the hidden layer, the linear transformation is:
 
 $$
 z_h = W_hx + b_h
@@ -171,57 +171,56 @@ $$
 \sigma(x) = \frac{1}{1 + e^{-x}}
 $$
 
-The output layer computes:
+The output layer uses the hidden-layer activations:
 
 $$
 z_o = W_oa_h + b_o
 $$
 
-and produces the final prediction:
+followed by the sigmoid function:
 
 $$
 \hat{y} = \sigma(z_o)
 $$
 
-The output can therefore be interpreted as a probability-like score between 0 and 1.
+This produces a continuous prediction between 0 and 1.
+
+---
 
 ## Loss Function
 
-NeuroForge uses squared error as the training objective:
+NeuroForge minimises the squared-error loss:
 
 $$
 L = \frac{1}{2}(\hat{y} - y)^2
 $$
 
-where:
+where $y$ is the target value and $\hat{y}$ is the network prediction.
 
-$y$ is the true class
-$\hat{y}$ is the predicted value
-
-Class weighting modifies the contribution of individual training examples:
+For class-weighted training, the loss contribution can be scaled by a class-specific weight $w$:
 
 $$
 L_w = wL
 $$
 
-where $w$ is the class-specific weight.
+---
 
 ## Backpropagation
 
-The output error is calculated as:
+The error at the output is:
 
 $$
 e = \hat{y} - y
 $$
 
-The output gradient is:
+Using the derivative of the sigmoid activation, the output-layer error signal becomes:
 
 $$
 \delta_o =
 (\hat{y} - y)\sigma'(z_o)
 $$
 
-The hidden-layer gradient is propagated backward through the output weights:
+The error is then propagated back to the hidden layer through the output weights:
 
 $$
 \delta_h =
@@ -230,17 +229,27 @@ $$
 \sigma'(z_h)
 $$
 
-where $\odot$ represents element-wise multiplication.
+where $\odot$ denotes element-wise multiplication.
 
-Weights are updated using gradient descent:
+These error signals are used to compute the gradients of the weights and biases.
+
+---
+
+## Parameter Updates
+
+NeuroForge updates its parameters using gradient descent:
 
 $$
 W \leftarrow W - \eta\nabla W
 $$
 
-where $\eta$ is the learning rate.
+$$
+b \leftarrow b - \eta\nabla b
+$$
 
-Biases are updated using the same gradient-descent principle.
+where $\eta$ is the learning rate, $\nabla W$ represents the weight gradient, and $\nabla b$ represents the bias gradient.
+
+This completes the training cycle: the network performs a forward pass, evaluates its error, propagates that error backwards, and adjusts its parameters to reduce the loss.
 
 ---
 
