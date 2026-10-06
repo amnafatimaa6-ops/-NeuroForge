@@ -185,7 +185,7 @@ $$
 
 The output can therefore be interpreted as a probability-like score between 0 and 1.
 
-Loss Function
+## Loss Function
 
 NeuroForge uses squared error as the training objective:
 
@@ -206,7 +206,7 @@ $$
 
 where $w$ is the class-specific weight.
 
-Backpropagation
+## Backpropagation
 
 The output error is calculated as:
 
