@@ -149,103 +149,98 @@ The model contains only a small number of parameters, keeping the implementation
 
 # 📐 Mathematics
 
-One of the main goals of NeuroForge is to make the mathematics visible rather than hiding it behind a high-level API.
+One of the main goals of NeuroForge is to make the underlying mathematics visible rather than hiding it behind a high-level machine-learning API.
 
-## Forward Propagation
+Forward Propagation
 
 For the hidden layer:
 
-[
+$$
 z_h = W_hx + b_h
-]
+$$
 
 The sigmoid activation is then applied:
 
-[
+$$
 a_h = \sigma(z_h)
-]
+$$
 
 where:
 
-[
-\sigma(x)=\frac{1}{1+e^{-x}}
-]
+$$
+\sigma(x) = \frac{1}{1 + e^{-x}}
+$$
 
 The output layer computes:
 
-[
-z_o = W_oa_h+b_o
-]
+$$
+z_o = W_oa_h + b_o
+$$
 
 and produces the final prediction:
 
-[
-\hat{y}=\sigma(z_o)
-]
+$$
+\hat{y} = \sigma(z_o)
+$$
 
 The output can therefore be interpreted as a probability-like score between 0 and 1.
 
----
+Loss Function
 
-## Loss Function
+NeuroForge uses squared error as the training objective:
 
-NeuroForge uses squared error for the training objective:
-
-[
-L=\frac{1}{2}(\hat{y}-y)^2
-]
+$$
+L = \frac{1}{2}(\hat{y} - y)^2
+$$
 
 where:
 
-* (y) is the true class
-* (\hat{y}) is the predicted value
+$y$ is the true class
+$\hat{y}$ is the predicted value
 
 Class weighting modifies the contribution of individual training examples:
 
-[
-L_w=wL
-]
+$$
+L_w = wL
+$$
 
-where (w) is the class-specific weight.
+where $w$ is the class-specific weight.
 
----
-
-## Backpropagation
+Backpropagation
 
 The output error is calculated as:
 
-[
-e=\hat{y}-y
-]
+$$
+e = \hat{y} - y
+$$
 
 The output gradient is:
 
-[
+$$
 \delta_o =
-(\hat{y}-y)
-\sigma'(z_o)
-]
+(\hat{y} - y)\sigma'(z_o)
+$$
 
 The hidden-layer gradient is propagated backward through the output weights:
 
-[
+$$
 \delta_h =
 (W_o\delta_o)
 \odot
 \sigma'(z_h)
-]
+$$
 
-where (\odot) represents element-wise multiplication.
+where $\odot$ represents element-wise multiplication.
 
 Weights are updated using gradient descent:
 
-[
-W \leftarrow W-\eta\nabla W
-]
+$$
+W \leftarrow W - \eta\nabla W
+$$
 
-where (\eta) is the learning rate.
+where $\eta$ is the learning rate.
 
-Biases are updated in the same way.
+Biases are updated using the same gradient-descent principle.
 
 ---
 
